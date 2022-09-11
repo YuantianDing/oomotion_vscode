@@ -2,6 +2,8 @@
 
 A textobject-oriented vscode keymap. Inspired by vim, kakoune and helix.
 
+![example.gif](https://raw.githubusercontent.com/DnailZ/oomotion_vscode/main/example.gif)
+
 # Modes
 
 Different from vim, oomotion modes refer to textobject selection & navigation mode. In each mode, your cursor will always select a specific kind of object and all navigations are based on that textobject. For example, in `word` mode, your cursor always selects a word in your document and you can use `hl` to navigate the previous/next word. And in `line` mode, your cursor always selects a line and you can use `jk` to navigate the previous/next line.
