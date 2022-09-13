@@ -156,17 +156,20 @@ export const packagegen = () => {
 	const packageJSON = () => ({
 		"name": "oomotion-vscode",
 		"displayName": "Oomotion",
+		"publisher" : "yuantiand",
 		"description": "A textobject-oriented vscode keymap. Inspired by vim, kakoune and helix.",
-		"version": "0.0.1",
+		"repository" : "https://github.com/DnailZ/oomotion_vscode",
+		"keywords" : ["keymaps", "vim", "oomotion", "textobject", "kakoune", "helix"],
+		"version": "0.0.2",
 		"engines": {
 			"vscode": "^1.66.0"
 		},
 		"categories": [
-			"Other"
+			"Keymaps", "Other"
 		],
+		"icon" : "docs/logo.png",
 		"activationEvents": [
-			"*",
-			"onCommand:type"
+			"*"
 		],
 		"main": "./out/extension.js",
 		"contributes": {
@@ -185,11 +188,11 @@ export const packagegen = () => {
 		},
 		"scripts": {
 			"packgen": "node ./out/package.js",
-			"vscode:prepublish": "npm run compile",
 			"compile": "tsc -p ./",
 			"watch": "tsc -watch -p ./",
 			"pretest": "npm run compile && npm run lint",
 			"lint": "eslint src --ext ts",
+			"vscode:prepublish": "npm run esbuild-base -- --minify",
 			"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
 			"esbuild": "npm run esbuild-base -- --sourcemap",
 			"esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
@@ -197,31 +200,32 @@ export const packagegen = () => {
 		},
 		"extensionKind": ["ui", "workspace"],
 		"devDependencies": {
-			"@types/babel__core": "^7.1.19",
 			"@babel/core": "^7.17.12",
+			"@types/babel__core": "^7.1.19",
 			"@types/coffeescript": "^2.5.1",
-			"@types/vscode": "^1.66.0",
-			"@types/lodash": "^4.14.182",
 			"@types/glob": "^7.2.0",
-			"@types/mocha": "^9.1.0",
+			"@types/lodash": "^4.14.182",
 			"@types/lru-cache": "^7.6.1",
+			"@types/mocha": "^9.1.0",
 			"@types/node": "14.x",
+			"@types/vscode": "^1.66.0",
 			"@typescript-eslint/eslint-plugin": "^5.16.0",
 			"@typescript-eslint/parser": "^5.16.0",
+			"@vscode/test-electron": "^2.1.3",
+			"esbuild": "^0.15.7",
 			"eslint": "^8.11.0",
 			"glob": "^7.2.0",
 			"mocha": "^9.2.2",
-			"typescript": "^4.5.5",
-			"@vscode/test-electron": "^2.1.3"
+			"typescript": "^4.5.5"
 		},
 		"dependencies": {
-			"denque": "^2.0.1",
-			"lodash": "^4.17.21",
 			"@tsdotnet/string-builder": "^1.0.12",
-			"quick-lru": "^6.1.1",
 			"coffeescript": "^2.7.0",
-			"lru-cache": "^7.8.1",
+			"denque": "^2.0.1",
 			"jsonc-parser": "^3.0.0",
+			"lodash": "^4.17.21",
+			"lru-cache": "^7.8.1",
+			"quick-lru": "^6.1.1",
 			"web-tree-sitter": "^0.20.5"
 		},
 		"gitDependencies": {

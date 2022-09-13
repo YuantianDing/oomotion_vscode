@@ -42,11 +42,15 @@ Each state has a unique cursor style as follows.
 * `NORMAL`: Thick line cursor
 * `SELECT`: Block cursor
 
-# Keymap
+You can also view the current state and mode on vscode's status bar.
+
+# Keymaps
+
+Oomotion supports a range of keymaps. You can view & edit most of them on [VS Code's Keyboard Shortcuts editor](https://code.visualstudio.com/docs/getstarted/keybindings).
 
 ## `INSERT` State
 
-* `j k` : enter `NORMAL` mode.
+* `j k` : enter `NORMAL` mode. 
 
 ## Switch Modes
 
@@ -198,3 +202,13 @@ Code Actions.
 * `space shift+w` : Close All Editors in Group. }
 
 
+
+# Current Status
+
+Current supported tree-sitter grammars: `bash`, `c`, `cpp`, `go`, `html`, `java`, `javascript`, `json`, `ocaml`, `python`, `rust`, `typescirpt`. I can't compile many tree-sitter grammar projects in webassembly.
+
+Most features works well on MacOS. Tell me if some features are different from what you expect.  I'm maintaining this project. Issues are welcome!
+
+# Changelog
+
+* `0.0.2` : Optimize `Move Up/Down` in `word` mode to make multicursor easier to use. Add a icon and keywords.

@@ -179,13 +179,13 @@ const startlexer = new WordLexer((p, n) => n !== 'space' && n !== p  || n === 'd
 function expandToObj(doc: vscode.TextDocument, selection: Selection): Selection {
     const nospaced = utils.shrinkSelection(doc, utils.isWhitespace, selection);
     if (nospaced.isEmpty) {
-        const prev = utils.checkedPrevChar(doc, nospaced.active);
-        if (!utils.isWhitespace(prev) && prev != utils.nullChar) {
-            return expandToObj(doc, utils.asDirectionOf(nospaced.active, nospaced.active.translate(0, -1), selection));
-        }
         const next = utils.checkedNextChar(doc, nospaced.active);
         if (!utils.isWhitespace(next) && next != utils.nullChar) {
             return expandToObj(doc, utils.asDirectionOf(nospaced.active, nospaced.active.translate(0, 1), selection))
+        }
+        const prev = utils.checkedPrevChar(doc, nospaced.active);
+        if (!utils.isWhitespace(prev) && prev != utils.nullChar) {
+            return expandToObj(doc, utils.asDirectionOf(nospaced.active, nospaced.active.translate(0, -1), selection));
         }
 
         const start = utils.findPrevInline(doc, startlexer, selection.start) || selection.start;
