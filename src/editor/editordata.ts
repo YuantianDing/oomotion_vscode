@@ -104,17 +104,17 @@ export class EditorData {
     changeModeTo(mode: mode.SelectionMode) {
         this.mode = mode;
     }
-    changeStateTo(name: 'INSERT' | 'NORMAL' | 'SELECT') {
+    changeStateTo(name: 'INSERT' | 'NORMAL' | 'SELECT', changeSelection: boolean = true) {
         if (name == 'INSERT') {
             this._state = { name, jmode: false };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.LineThin;
             this.editor.options.lineNumbers = vscode.TextEditorLineNumbersStyle.On;
-            this.mode = this._mode;
+            if(changeSelection) { this.mode = this._mode; }
         } else if (name == 'NORMAL') {
             this._state = { name, numarg: undefined };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.Line;
             this.editor.options.lineNumbers = vscode.TextEditorLineNumbersStyle.Relative;
-            this.mode = this._mode;
+            if(changeSelection) { this.mode = this._mode; }
         } else {
             this._state = { name, numarg: undefined };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.Block;

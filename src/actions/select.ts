@@ -48,7 +48,7 @@ class escapeAction implements SimpleAction {
         this.key = key;
     }
     async callback(editorData: editorData.EditorData, state: editorData.State): Promise<void> {
-        editorData.changeStateTo('NORMAL');
+        editorData.changeStateTo('NORMAL', false);
     }
 }
 
@@ -57,5 +57,5 @@ const EscapeAction = SimpleActionMixin(escapeAction);
 
 export default [
     new SelectStateAction(['v']),
-    new EscapeAction(['escape']),
+    new EscapeAction(['escape', 'v']),
 ]

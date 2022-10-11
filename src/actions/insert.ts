@@ -31,6 +31,10 @@ class insertAction implements SimpleAction {
         this.key = key;
     }
     async callback(editorData: editorData.EditorData, state: editorData.State): Promise<void> {
+        if(editorData.editor.selections.length == 1 && editorData.editor.selections[0].isEmpty && this.mode != line) {
+            editorData.changeStateTo("INSERT");
+            return;
+        }
         const { obj } = editorData.editor.getTextObjects(this.mode || editorData.mode);
         var relative_pos: [number, number][] = [];
         await editorData.editor.editor.edit(edit => {
