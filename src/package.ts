@@ -182,6 +182,11 @@ export const packagegen = () => {
 						"type": "string",
 						"default": "normal",
 						"description": "Default editor mode when the editor is opened."
+					},
+					"oomotion.gotoNormalKeybinding": {
+						"type": "string",
+						"default": "jk",
+						"description": "The sequence of key used to go back to normal mode."
 					}
 				}
 			}

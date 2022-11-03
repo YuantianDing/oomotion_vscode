@@ -6,7 +6,7 @@ import StringBuilder from "@tsdotnet/string-builder";
 import * as word from './modes/word'
 import { Mode } from 'fs';
 import { last } from 'lodash';
-type Insert = { name: 'INSERT', jmode: boolean }
+type Insert = { name: 'INSERT', remaining: string }
 type Normal = { name: 'NORMAL', numarg: number | undefined }
 type Extend = { name: 'SELECT', numarg: number | undefined }
 export type State = Insert | Normal | Extend;
@@ -106,7 +106,7 @@ export class EditorData {
     }
     changeStateTo(name: 'INSERT' | 'NORMAL' | 'SELECT', changeSelection: boolean = true) {
         if (name == 'INSERT') {
-            this._state = { name, jmode: false };
+            this._state = { name, remaining: vscode.workspace.getConfiguration("oomotion").get("gotoNormalKeybinding", "jk") };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.LineThin;
             this.editor.options.lineNumbers = vscode.TextEditorLineNumbersStyle.On;
             if(changeSelection) { this.mode = this._mode; }
@@ -129,25 +129,25 @@ export class EditorData {
     }
     onCharTyped(ch: string) {
         if (this._state.name == 'INSERT') {
-            if (!this._state.jmode) {
-                if (ch === 'j') {
-                    this._state.jmode = true;
-                } else {
-                    this._state.jmode = false;
-                    vscode.commands.executeCommand('default:type', { text: ch });
-                }
-            } else {
-                this._state.jmode = false;
-                switch (ch) {
-                    case 'k':
-                    case 'j':
+            if (this._state.remaining.length > 0) {
+                if(this._state.remaining.charAt(0) == ch) {
+                    this._state.remaining = this._state.remaining.substring(1);
+                    if (this._state.remaining.length == 0) {
                         this._state = { name: 'NORMAL', numarg: undefined}
                         this.changeStateTo('NORMAL');
-                        break;
-                    default:
-                        vscode.commands.executeCommand('default:type', { text: 'j' + ch });
-                        break;
+                    }
+                } else {
+                    const keys = vscode.workspace.getConfiguration("oomotion").get("gotoNormalKeybinding", "jk");
+                    if(keys.length > this._state.remaining.length) {
+                        vscode.commands.executeCommand("default:type", {text: keys.substring(0, keys.length - this._state.remaining.length) + ch})
+                        this._state.remaining = keys;
+                    } else {
+                        vscode.commands.executeCommand("default:type", {text: ch})
+                    }
                 }
+            } else {
+                this._state.remaining = vscode.workspace.getConfiguration("oomotion").get("gotoNormalKeybinding", "jk");
+                vscode.commands.executeCommand("default:type", {text: ch})
             }
         } else  {
             if (utils.isDecimal(ch)) {
