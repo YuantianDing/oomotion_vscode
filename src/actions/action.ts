@@ -42,11 +42,7 @@ export function registerAction(ctx: vscode.ExtensionContext, action: Action) {
     let disposable = vscode.commands.registerTextEditorCommand(`oomotion-vscode.` + action.name, (edtr, edit) => {
         extension.editorData.map_or_else(data => {
             if (action.state) {
-                if (action.state.includes(data.state.name)) {
                     actionFirstTime(action, data, edit);
-                } else {
-                    vscode.window.showErrorMessage(`oomotion-vscode.${action.name} should only be used in NORMAL mode`);
-                }
             } else {
                 actionFirstTime(action, data, edit);
             }

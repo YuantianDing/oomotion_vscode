@@ -22,16 +22,19 @@ class selectStateAction implements SimpleAction {
     canGoBack: boolean = false;
     state: editorData.StateName[] = ['NORMAL'];
     when = undefined;
+    targetState: 'INSERT' | 'NORMAL' | 'SELECT';
 
-    constructor(key: ActionKey[]) {
-        this.name = "enterSelectState";
-        this.title = `Enter SELECT State`;
+    constructor(key: ActionKey[], state: 'INSERT' | 'NORMAL' | 'SELECT') {
+        this.name = utils.camelize(`enter ${state} state`);
+        this.title = `Enter ${state} State`;
         this.key = key;
+        this.targetState = state;
     }
     async callback(editorData: editorData.EditorData, state: editorData.State): Promise<void> {
-        editorData.changeStateTo('SELECT');
+        editorData.changeStateTo(this.targetState);
     }
 }
+
 class escapeAction implements SimpleAction {
 
     name: string;
@@ -56,6 +59,8 @@ const SelectStateAction = SimpleActionMixin(selectStateAction);
 const EscapeAction = SimpleActionMixin(escapeAction);
 
 export default [
-    new SelectStateAction(['v']),
+    new SelectStateAction(['v'], "SELECT"),
+    new SelectStateAction([], "NORMAL"),
+    new SelectStateAction([], "INSERT"),
     new EscapeAction(['escape', 'v']),
 ]
