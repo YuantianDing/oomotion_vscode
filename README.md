@@ -1,6 +1,6 @@
 # Oomotion Vscode
 
-A textobject-oriented vscode keymap. Inspired by vim, kakoune and helix.
+A textobject-oriented vscode keymap. Inspired by vim, [kakoune](https://kakoune.org/) and [helix](https://helix-editor.com/).
 
 ![example.gif](https://raw.githubusercontent.com/DnailZ/oomotion_vscode/main/example.gif)
 
@@ -8,15 +8,15 @@ A textobject-oriented vscode keymap. Inspired by vim, kakoune and helix.
 
 Different from vim, oomotion modes refer to textobject selection & navigation mode. In each mode, your cursor will always select a specific kind of object and all navigations are based on that textobject. For example, in `word` mode, your cursor always selects a word in your document and you can use `hl` to navigate the previous/next word. And in `line` mode, your cursor always selects a line and you can use `jk` to navigate the previous/next line.
 
-The following is all modes supported by current version of oomotion:
+These are all the modes supported by the current version of oomotion:
 
 * `character`: Select & navigate by a single character each time.
 * `word`: Select & navigate by a word `[\p{L}\p{N}_@$#]+`  or consecutive symbols `[\p{S}\p{P}\p{M}]+` or a single delimiter `[()[]{}<>,;'"]` each time. For example, `let b_ne = !(a.b != c)` contains words `let`, `b_ne`, `=`, `!`, `(`, `a`, `.`, `b` `!=`, `c`, `)`.
-* `small-word`: Similar to `word`, but select a inner word in camel case or snake case. For example, `OoMotion VSCode oomotion_vscode` contains `smallword`s `Oo`, `Motion`, `VSCode`, `oomotion`, `vscode`.
+* `small-word`: Similar to `word`, but select an inner word in camel case or snake case. For example, `OoMotion VSCode oomotion_vscode` contains `smallword`s `Oo`, `Motion`, `VSCode`, `oomotion`, `vscode`.
 * `big-word`: Similar to `word`, but consider symbols `[\p{S}\p{P}\p{M}]` like `!.+-` same as letters and numbers. Ignore all delimiters. For example, `let b_ne = !(a.b != c)` becomes `let`, `b_ne`, `=`, `!`, `a.b` `!=`, `c`.
 * `line`: Select & navigate by a single line each time.
-* `tree-sitter`: Select & navigate by a single tree sitter node each time. 
-* `line-tree`: A line level tree navigator that based on indentation. (experimental)
+* `tree-sitter`: Select & navigate by a single tree sitter node each time.
+* `line-tree`: A line-level tree navigator that is based on indentation. (experimental)
 
 Each mode has a unique colored box that highlights your textobject selection.
 
@@ -25,14 +25,14 @@ Each mode has a unique colored box that highlights your textobject selection.
 * `small-word`: : ![#c91010](https://via.placeholder.com/15/c91010/c91010.png) red dotted box
 * `big-word`: : ![#964d4d](https://via.placeholder.com/15/964d4d/964d4d.png) red dashed box
 * `line`: : ![#4d8a96](https://via.placeholder.com/15/4d8a96/4d8a96.png) blue solid box
-* `tree-sitter`: : ![#aba246](https://via.placeholder.com/15/aba246/aba246.png) yellow solid box 
-* `line-tree`: : ![#aba246](https://via.placeholder.com/15/aba246/aba246.png) yellow dashed box 
+* `tree-sitter`: : ![#aba246](https://via.placeholder.com/15/aba246/aba246.png) yellow solid box
+* `line-tree`: : ![#aba246](https://via.placeholder.com/15/aba246/aba246.png) yellow dashed box
 
 # States
 
 Oomotion states is similar to vim's modes. There are three states available:
 
-* `INSERT`: Insert text through keyboard.
+* `INSERT`: Insert text through the keyboard.
 * `NORMAL`: All keyboard inputs are considered commands. Used for navigation and editing.
 * `SELECT`: All keyboard inputs are considered commands. Select multiple textobjects using navigation keys.
 
@@ -81,8 +81,8 @@ Basic Navigation.
 
 Find by a single character.
 
-* `f <char>`: Find the next textobject start with `<char>`. Can select across multiple line (different from vim). Can also be used in `tree-sitter`, `line-tree`. 
-* `s <char>`: Find the previous textobject start with `<char>`. Can select across multiple line (different from vim). Can also be used in `tree-sitter`, `line-tree`. 
+* `f <char>`: Find the next textobject start with `<char>`. Can select across multiple lines (different from vim). Can also be used in `tree-sitter`, `line-tree`. 
+* `s <char>`: Find the previous textobject start with `<char>`. Can select across multiple lines (different from vim). Can also be used in `tree-sitter`, `line-tree`. 
 
 Find by current textobject selection.
 
@@ -175,9 +175,9 @@ Code Navigation.
 * `g t` : Go to type definition.
 * `g i`: Go to implementation.
 * `g r`: Go to references.
-* `g [`: Go to previous marker (error, warnning, etc).
-* `g ]`: Go to next marker (error, warnning, etc).
-* `space b` : Open the breadcumbs. 
+* `g [`: Go to previous marker (error, warning, etc).
+* `g ]`: Go to next marker (error, warning, etc).
+* `space b` : Open the breadcrumbs.
 * `space s` : Open VS Codes's `Go to Symbol in Editor`
 * `space s` : Open VS Codes's `Go to Symbol in Workspace`
 * `space h` : Show Definition Preview Hover.
@@ -205,10 +205,10 @@ Code Actions.
 
 # Current Status
 
-Current supported tree-sitter grammars: `bash`, `c`, `cpp`, `go`, `html`, `java`, `javascript`, `json`, `ocaml`, `python`, `rust`, `typescirpt`. I can't compile many tree-sitter grammar projects in webassembly.
+Current supported tree-sitter grammars: `bash`, `c`, `cpp`, `go`, `html`, `java`, `javascript`, `json`, `ocaml`, `python`, `rust`, `typescript`. I can't compile many tree-sitter grammar projects in webassembly.
 
-Most features works well on MacOS. Tell me if some features are different from what you expect.  I'm maintaining this project. Issues are welcome!
+Most features work well on MacOS. Tell me if some features are different from what you expect.  I'm maintaining this project. Issues are welcome!
 
 # Changelog
 
-* `0.0.2` : Optimize `Move Up/Down` in `word` mode to make multicursor easier to use. Add a icon and keywords.
+* `0.0.2` : Optimize `Move Up/Down` in `word` mode to make multicursor easier to use. Add an icon and keywords.
