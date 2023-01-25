@@ -48,9 +48,17 @@ You can also view the current state and mode on vscode's status bar.
 
 Oomotion supports a range of keymaps. You can view & edit most of them on [VS Code's Keyboard Shortcuts editor](https://code.visualstudio.com/docs/getstarted/keybindings).
 
-## `INSERT` State
+## From `NORMAL` State
 
-* `j k` : enter `NORMAL` mode. 
+* `v` : enter `SELECT` state. 
+
+## From `INSERT` State
+
+* `j k` : return to `NORMAL` state. 
+
+## From `SELECT` State
+
+* `Esc` : return to `NORMAL` state. 
 
 ## Switch Modes
 
@@ -116,7 +124,7 @@ Add new cursors.
 
 ## Editing
 
-Enter `INSERT` modes.
+Enter `INSERT` state.
 
 * `i`: Insert at left of selection.
 * `a`: Insert at right of selection.
