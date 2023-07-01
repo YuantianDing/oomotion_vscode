@@ -104,15 +104,7 @@ export class EditorData {
 
     private set mode(mode: mode.SelectionMode) {
         if (this.state.name == 'NORMAL') {
-            let selections = this.editor.collapseObjects(mode);
-
-            if (selections) {
-                if (selections.arr.length == 1) {
-                    if (!selections.arr[0].selection.isEmpty) {
-                        this.editor.changeSelection(selections);
-                    }
-                }
-            }
+            this.editor.changeSelection(this.editor.collapseObjects(mode));
 
         } else if (this.state.name == 'SELECT') {
             this.editor.changeSelection(this.editor.getTextObjects(mode).obj);
