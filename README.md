@@ -207,7 +207,7 @@ Code Actions.
 
 Current supported tree-sitter grammars: `bash`, `c`, `cpp`, `go`, `html`, `java`, `javascript`, `json`, `ocaml`, `python`, `rust`, `typescirpt`. I can't compile many tree-sitter grammar projects in webassembly.
 
-Most features works well on MacOS. Tell me if some features are different from what you expect. I will rework the project and add those features when I got time. Thank you!
+I stopped maintaining this project. I'm considering reimplement this on Zed for better performance. Sorry for the inconveniences.
 
 # Changelog
 
