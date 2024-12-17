@@ -77,12 +77,13 @@ export class EditorData {
     private _mode: mode.SelectionMode;
     editor: EditorManager;
     statusbar: vscode.StatusBarItem;
+
     constructor(editor: vscode.TextEditor, mode: mode.SelectionMode) {
         this.editor = new EditorManager(editor);
         this._mode = mode;
         this.statusbar = vscode.window.createStatusBarItem("oomotion", vscode.StatusBarAlignment.Left, 0);
         this._state = { name: 'NORMAL', numarg: undefined };
-        setTimeout(() => this.changeStateTo('NORMAL'), 10);
+        setTimeout(() => this.initializeMode(), 10);
     }
 
     dispose() {
@@ -91,9 +92,20 @@ export class EditorData {
     }
     get mode() { return this._mode; }
     get state() { return this._state; }
+
+    // Sets the mode to normal without changing the selection
+    private initializeMode() {
+        this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.Line;
+        this.editor.options.lineNumbers = vscode.TextEditorLineNumbersStyle.Relative;
+        this.updateDecoration(this._mode);
+        this.updateStatusBar();
+        vscode.commands.executeCommand("setContext", "oomotion-vscode.state", "NORMAL");
+    }
+
     private set mode(mode: mode.SelectionMode) {
         if (this.state.name == 'NORMAL') {
             this.editor.changeSelection(this.editor.collapseObjects(mode));
+
         } else if (this.state.name == 'SELECT') {
             this.editor.changeSelection(this.editor.getTextObjects(mode).obj);
         }
@@ -109,12 +121,12 @@ export class EditorData {
             this._state = { name, remaining: vscode.workspace.getConfiguration("oomotion").get("gotoNormalKeybinding", "jk") };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.LineThin;
             this.editor.options.lineNumbers = vscode.TextEditorLineNumbersStyle.On;
-            if(changeSelection) { this.mode = this._mode; }
+            if (changeSelection) { this.mode = this._mode; }
         } else if (name == 'NORMAL') {
             this._state = { name, numarg: undefined };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.Line;
             this.editor.options.lineNumbers = vscode.TextEditorLineNumbersStyle.Relative;
-            if(changeSelection) { this.mode = this._mode; }
+            if (changeSelection) { this.mode = this._mode; }
         } else {
             this._state = { name, numarg: undefined };
             this.editor.options.cursorStyle = vscode.TextEditorCursorStyle.Block;
@@ -124,38 +136,38 @@ export class EditorData {
     }
     clearNumarg() {
         if (this._state.name != 'INSERT') {
-            this._state = { name: this._state.name, numarg: undefined}
+            this._state = { name: this._state.name, numarg: undefined }
         }
     }
     onCharTyped(ch: string) {
         if (this._state.name == 'INSERT') {
             if (this._state.remaining.length > 0) {
-                if(this._state.remaining.charAt(0) == ch) {
+                if (this._state.remaining.charAt(0) == ch) {
                     this._state.remaining = this._state.remaining.substring(1);
                     if (this._state.remaining.length == 0) {
-                        this._state = { name: 'NORMAL', numarg: undefined}
+                        this._state = { name: 'NORMAL', numarg: undefined }
                         this.changeStateTo('NORMAL');
                     }
                 } else {
                     const keys = vscode.workspace.getConfiguration("oomotion").get("gotoNormalKeybinding", "jk");
-                    if(keys.length > this._state.remaining.length) {
-                        vscode.commands.executeCommand("default:type", {text: keys.substring(0, keys.length - this._state.remaining.length) + ch})
+                    if (keys.length > this._state.remaining.length) {
+                        vscode.commands.executeCommand("default:type", { text: keys.substring(0, keys.length - this._state.remaining.length) + ch })
                         this._state.remaining = keys;
                     } else {
-                        vscode.commands.executeCommand("default:type", {text: ch})
+                        vscode.commands.executeCommand("default:type", { text: ch })
                     }
                 }
             } else {
                 this._state.remaining = vscode.workspace.getConfiguration("oomotion").get("gotoNormalKeybinding", "jk");
-                vscode.commands.executeCommand("default:type", {text: ch})
+                vscode.commands.executeCommand("default:type", { text: ch })
             }
-        } else  {
+        } else {
             if (utils.isDecimal(ch)) {
                 this._state.numarg = this._state.numarg ? this._state.numarg : 0;
                 this._state.numarg *= 10;
                 this._state.numarg += parseInt(ch);
             }
-        } 
+        }
     }
     private updateDecoration(newmode: mode.SelectionMode | undefined) {
         this.editor.clearDecoration(this._mode.decorationtype);
