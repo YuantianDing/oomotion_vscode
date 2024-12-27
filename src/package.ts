@@ -160,7 +160,7 @@ export const packagegen = () => {
 		"description": "A textobject-oriented vscode keymap. Inspired by vim, kakoune and helix.",
 		"repository" : "https://github.com/DnailZ/oomotion_vscode",
 		"keywords" : ["keymaps", "vim", "oomotion", "textobject", "kakoune", "helix"],
-		"version": "0.0.2",
+		"version": "0.0.3",
 		"engines": {
 			"vscode": "^1.66.0"
 		},
