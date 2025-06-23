@@ -1,3 +1,8 @@
+try { // temp fix until we update tree-sitter.
+    // @ts-ignore
+    delete WebAssembly.instantiateStreaming;
+} catch {}
+
 import * as vscode from 'vscode';
 import { actionList, registerAction } from './actions/action';
 import { EditorData, EditorDataManager } from './editor/editordata';
