@@ -21,10 +21,8 @@ class insertAction implements SimpleAction {
     constructor(direction: mode.DirectionHorizontal, range: mode.ObjectRangeOption, key: ActionKey[], mode?: mode.SelectionMode, title?: string) {
         this.range = range;
         this.mode = mode;
-        this.direction = direction;
-
-        this.title = title || (
-            (direction == 'right' ? `Insert before` : `Append after`) +
+        this.direction = direction;        this.title = title || (
+            (direction == 'left' ? `Insert before` : `Append after`) +
             (range === 'auto' ? " " : ` ${range} `) + "Object"
         );
         this.name = lodash.camelCase(this.title);
